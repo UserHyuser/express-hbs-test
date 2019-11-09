@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require ('path');
-const exphbs = require('express-handlebars')
+const exphbs = require('express-handlebars');
 
 const PORT = process.env.PORT || 3000;
 
@@ -27,9 +27,6 @@ app.use('/', homeRoutes)
 app.use('/add', addRoutes)
 app.use('/courses', coursesRoutes)
 app.use('/card', cardRoutes)
-
-
-
 
 
 app.listen(PORT, ()=>{
