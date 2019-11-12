@@ -1,3 +1,5 @@
+// Модель корзины когда работали с файлами
+/*
 const fs = require('fs');
 const path = require('path');
 
@@ -62,4 +64,4 @@ class Card {
 	}
 }
 
-module.exports = Card
+module.exports = Card*/

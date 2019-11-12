@@ -1,3 +1,5 @@
+// Версия при работе с файлами
+/*
 const uuid = require('uuid/v4')
 const fs = require('fs');
 const path = require('path')
@@ -68,4 +70,36 @@ class Course {
 
 }
 
-module.exports = Course;
+module.exports = Course;*/
+
+// Версия при работе с БД Mongo
+const {Schema, model} = require('mongoose')
+
+const courseSchema = new Schema({ // Схема в mongoose
+	title: {
+		type: String,
+		required: true
+	},
+	price: {
+		type: Number,
+		required: true
+	},
+	img: String,
+	userId:{
+		type: Schema.Types.ObjectId,
+		ref: 'User'
+	}
+	// id создается по умолчанию
+})
+
+courseSchema.method('toClient', function () {
+	const course = this.toObject()
+
+	course.id = course._id // Замена _id на id
+	delete course._id
+
+	return course
+
+})
+
+module.exports = model('Course', courseSchema)
