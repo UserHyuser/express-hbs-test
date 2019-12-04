@@ -2,6 +2,7 @@ const express = require('express');
 const path = require ('path');
 const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
+const session = require('express-session');
 
 const PORT = process.env.PORT || 3000;
 const dbAddress = 'mongodb+srv://userdb:9R89pNDCLx8z1CcQ@cluster0-bx7mg.mongodb.net/shop';
@@ -12,7 +13,9 @@ const coursesRoutes = require('./routes/courses');
 const addRoutes = require('./routes/add');
 const cardRoutes = require('./routes/card');
 const ordersRoutes = require('./routes/orders');
+const authRoutes = require('./routes/auth');
 const User = require('./models/user')
+const varMiddleware = require('./middleware/variables')
 
 const app = express();
 
@@ -37,11 +40,18 @@ app.use(async (req,res,next)=>{
 
 app.use(express.static(path.join(__dirname,'public')))
 app.use(express.urlencoded({extended: true}))
+app.use(session({
+	secret: 'some string',
+	resave: false,
+	saveUninitialized: false
+}))
+app.use(varMiddleware)
 app.use('/', homeRoutes)
 app.use('/add', addRoutes)
 app.use('/courses', coursesRoutes)
 app.use('/card', cardRoutes)
 app.use('/orders', ordersRoutes)
+app.use('/auth', authRoutes)
 
 
 async function start (){
